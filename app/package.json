@@ -1,0 +1,21 @@
+{
+  "name": "approuter",
+  "description": "Node.js based application router service for html5-apps",
+  "dependencies": {
+    "@sap/approuter": "^14.1.1",
+    "jwt-decode": "^3"
+  },
+  "scripts": {
+    "start": "node dist/extended-server.js",
+    "build:ts": "tsc",
+    "start:hybrid": "cds bind --exec node node_modules/@sap/html5-repo-mock/index.js",
+    "update_env": "cf de forecasting-router",
+    "custom": "node custom.js"
+  },
+  "devDependencies": {
+    "@types/jwt-decode": "^3",
+    "@types/node": "^18",
+    "cross-env": "^7.0.3",
+    "typescript": "^5"
+  }
+}

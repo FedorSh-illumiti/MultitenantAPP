@@ -1,0 +1,14 @@
+{
+  "cds": {
+    "requires": {
+      "API_ENTERPRISE_PROJECT_SRV_0002": {
+        "kind": "odata-v2",
+        "model": "srv/external/API_ENTERPRISE_PROJECT_SRV_0002"
+      },
+      "API_BUSINESS_PARTNER": {
+        "kind": "odata-v2",
+        "model": "srv/external/API_BUSINESS_PARTNER"
+      }
+    }
+  }
+}

@@ -1,0 +1,4 @@
+specVersion: "2.5"
+metadata:
+  name: company1.forecasting.launchpad
+type: application

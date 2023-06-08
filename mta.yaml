@@ -1,0 +1,196 @@
+_schema-version: "3.1"
+ID: forecasting
+description: Forecasting lite
+version: 1.0.1
+
+parameters:
+  appl_suffix: dev
+  appname: forecasting
+  category: DEV-BETA
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+  keep-existing-routes: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm install --production
+        - npx -p @sap/cds-dk cds build --production
+        - npm run build:cf
+  after-all:
+    - builder: custom
+      commands:
+        - npm install
+
+modules:
+  - name: forecasting-router
+    type: approuter.nodejs
+    path: app
+    build-parameters:
+      build-parameters:
+        ignore:
+          [
+            "node_modules/",
+            "default-env.json",
+            "manifest*.yml",
+            "local-testing/",
+          ]
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:ts
+    parameters:
+      disk-quota: 1024M
+      keep-existing-routes: true
+      memory: 512M
+    properties:
+      TENANT_HOST_PATTERN: ^(.*)-${default-uri}
+    provides:
+      - name: app-api
+        properties:
+          protocol: ${protocol}
+          uri: ${default-uri}
+    requires:
+      - name: launchpad-html5-repo-runtime
+      - name: forecasting-uaa
+      - name: forecasting-registry
+      - name: srv-api
+        group: destinations
+        properties:
+          forwardAuthToken: true
+          strictSSL: false
+          name: forecasting-app-srv
+          url: ~{srv-url}
+      - name: forecasting-destination-service
+
+  - name: forecasting-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      memory: 256MB
+      disk-quota: 1024MB
+    build-parameters:
+      builder: npm-ci
+      ignore: ["node_modules/", "default-env.json", "manifest*.yml"]
+    requires:
+      - name: forecasting-uaa
+      - name: forecasting-settings
+      - name: forecasting-registry
+      - name: forecasting-destination-service
+      - name: launchpad-html5-repo-runtime
+      - name: app-api
+        properties:
+          APP_PROTOCOL: ~{protocol}
+          APP_URI: ~{uri}
+    provides:
+      - name: srv-api
+        properties:
+          forwardAuthToken: true
+          srv-url: ${default-url}
+
+  - name: forecasting-app-content
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: forecasting-html5-repo-host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - artifacts:
+            - company1forecastinglaunchpad.zip
+          name: company1forecastinglaunchpad
+          target-path: resources/
+
+  - name: company1forecastinglaunchpad
+    type: html5
+    path: app/launchpad
+    build-parameters:
+      build-result: dist
+      builder: custom
+      ignore: ["node_modules/", "default-env.json", "manifest*.yml"]
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms: []
+
+resources:
+  - name: forecasting-uaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      path: ./xs-security.json
+      service: xsuaa
+      service-plan: application
+  - name: forecasting-settings
+    type: org.cloudfoundry.existing-service
+  - name: forecasting-registry
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        appName: forecasting-${appl_suffix}
+        appUrls:
+          callbackTimeoutMillis: 300000
+          getDependencies: ~{srv-api/srv-url}/callback/v1.0/dependencies
+          onSubscription: ~{srv-api/srv-url}/callback/v1.0/tenants/{tenantId}
+          onSubscriptionAsync: false
+          onUnSubscriptionAsync: false
+        category: ${category}
+        description: forecasting
+        displayName: forecasting ${appl_suffix}
+        xsappname: forecasting
+      service: saas-registry
+      service-name: forecasting-registry
+      service-plan: application
+    requires:
+      - name: srv-api
+      - name: forecasting-uaa
+  - name: forecasting-destination-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        HTML5Runtime_enabled: false
+        init_data:
+          instance:
+            destinations:
+              - Authentication: OAuth2Password
+                Description: CF Cloud Controller API
+                Name: app-cfapi
+                Password: <SetValueInCockpit>
+                ProxyType: Internet
+                Type: HTTP
+                URL: ${controller-url}
+                User: <SetValueInCockpit>
+                clientId: cf
+                clientSecret: null
+                tokenServiceURL: ${authorization-url}/oauth/token
+              - Authentication: BasicAuthentication
+                Description: S/4 Public cloud
+                Name: app-s4public
+                Password: <SetValueInCockpit>
+                ProxyType: Internet
+                Type: HTTP
+                URL: https://my404308-api.s4hana.cloud.sap/sap/opu/odata/sap/
+                User: <SetValueInCockpit>
+              - Authentication: NoAuthentication
+                Name: ui5
+                ProxyType: Internet
+                Type: HTTP
+                URL: https://ui5.sap.com
+            existing_destinations_policy: ignore
+        version: 1.0.0
+      service: destination
+      service-name: forecasting-destination-service
+      service-plan: lite
+  - name: forecasting-html5-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-host
+
+  - name: launchpad-html5-repo-runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-runtime
+      service-name: html5-apps-repo-rt

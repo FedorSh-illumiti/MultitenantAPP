@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "service.tscompany1.forecasting.js",
+  "sourceRoot": "",
+  "sources": [
+    "../../src/types/service.tscompany1.forecasting.ts"
+  ],
+  "names": [],
+  "mappings": ";;;AAgCA,IAAY,MAMX;AAND,WAAY,MAAM;IACd,8CAAoC,CAAA;IACpC,gDAAsC,CAAA;IACtC,gDAAsC,CAAA;IACtC,oDAA0C,CAAA;IAC1C,0DAAgD,CAAA;AACpD,CAAC,EANW,MAAM,GAAN,cAAM,KAAN,cAAM,QAMjB;AAED,IAAY,eAMX;AAND,WAAY,eAAe;IACvB,kCAAe,CAAA;IACf,oCAAiB,CAAA;IACjB,oCAAiB,CAAA;IACjB,wCAAqB,CAAA;IACrB,8CAA2B,CAAA;AAC/B,CAAC,EANW,eAAe,GAAf,uBAAe,KAAf,uBAAe,QAM1B",
+  "sourcesContent": [
+    "export type Title = string;\n\nexport interface IBooks {\n    ID: number;\n    title: Title;\n    stock: number;\n}\n\nexport interface IBooksa {\n    title: string;\n    stock: number;\n}\n\nexport interface IBooks2 {\n    ID2: number;\n    title2: string;\n    stock2: IBooksa;\n}\n\nexport interface IProjects {\n    ProjectName: string;\n    ProjectCurrency: string;\n}\n\nexport interface IUserDetails {\n    email: string;\n    familyName: string;\n    givenName: string;\n    logonName: string;\n    initials: string;\n}\n\nexport enum Entity {\n    Books = \"company1.forecasting.Books\",\n    Booksa = \"company1.forecasting.Booksa\",\n    Books2 = \"company1.forecasting.Books2\",\n    Projects = \"company1.forecasting.Projects\",\n    UserDetails = \"company1.forecasting.UserDetails\"\n}\n\nexport enum SanitizedEntity {\n    Books = \"Books\",\n    Booksa = \"Booksa\",\n    Books2 = \"Books2\",\n    Projects = \"Projects\",\n    UserDetails = \"UserDetails\"\n}\n"
+  ]
+}

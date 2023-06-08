@@ -1,0 +1,45 @@
+# CAP fdc_marchal_universal
+_out
+*.db
+*.sqlite
+connection.properties
+default-*.json
+.cdsrc-private.json
+gen/
+node_modules/
+target/
+
+# Web IDE, App Studio
+.che/
+.gen/
+
+# MTA
+*_mta_build_tmp
+*.mtar
+mta_archives/
+
+# Other
+.DS_Store
+*.orig
+*.log
+
+
+
+*.iml
+*.flattened-pom.xml
+
+# IDEs
+# .vscode
+# .idea
+srv/**
+!srv/cat-service.cds
+!srv/i18n/
+!srv/i18n/*
+!srv/server.js
+!srv/library.js
+
+
+
+app/launchpad/webapp/**
+app/launchpad/dist/**
+resources/company1forecastinglaunchpad.zip
