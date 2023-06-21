@@ -130,4 +130,3 @@ const deleteRoute = async (subscribedSubdomain, appname) => {
     });
 };
 exports.default = { getSubscriptions, deleteRoute, createRoute, getCFInfo };
-//# sourceMappingURL=library.js.map

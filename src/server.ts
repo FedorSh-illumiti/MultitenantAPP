@@ -5,7 +5,6 @@ import xssec from "@sap/xssec";
 import passport from "passport";
 
 import lib from "./library";
-import { initDB } from "./utils/dbUtils";
 import httpClient from '@sap-cloud-sdk/http-client';
 import { retrieveJwt } from '@sap-cloud-sdk/connectivity';
 
@@ -74,11 +73,11 @@ function initapi(app) {
 
         lib.createRoute(req.body.subscribedSubdomain, services.registry.appName + "-app").then(
             async function (result) {
-                try {
-                    await initDB(req.body.subscribedTenantId);
-                } catch (error) {
-                    LOG.error(error.message);
-                }
+                // try {
+                //     await initDB(req.body.subscribedTenantId);
+                // } catch (error) {
+                //     LOG.error(error.message);
+                // }
 
                 res.status(200).send(tenantURL);
             },
@@ -152,13 +151,6 @@ function initapi(app) {
         }
     });
 
-    app.post("/srv/initDB", async function (req, res) {
-        try {
-            await initDB(req.tenant || req.authInfo.getSubaccountId());
-        } catch (error) {
-            res.status(500).send(error.message);
-        }
-    });
 
     // // destination reuse service
     app.get('/srv/destinations', async function (req, res) {

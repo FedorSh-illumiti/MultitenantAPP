@@ -9,7 +9,6 @@ const xsenv_1 = __importDefault(require("@sap/xsenv"));
 const xssec_1 = __importDefault(require("@sap/xssec"));
 const passport_1 = __importDefault(require("passport"));
 const library_1 = __importDefault(require("./library"));
-const dbUtils_1 = require("./utils/dbUtils");
 const http_client_1 = __importDefault(require("@sap-cloud-sdk/http-client"));
 const connectivity_1 = require("@sap-cloud-sdk/connectivity");
 const LOG = cds_1.default.log('sql');
@@ -56,12 +55,11 @@ function initapi(app) {
         let tenantURL = process.env.APP_PROTOCOL + "://" + req.body.subscribedSubdomain + "-" + process.env.APP_URI;
         LOG.info("Subscribe:", req.body.subscribedSubdomain, req.body.subscribedTenantId, tenantURL);
         library_1.default.createRoute(req.body.subscribedSubdomain, services.registry.appName + "-app").then(async function (result) {
-            try {
-                await (0, dbUtils_1.initDB)(req.body.subscribedTenantId);
-            }
-            catch (error) {
-                LOG.error(error.message);
-            }
+            // try {
+            //     await initDB(req.body.subscribedTenantId);
+            // } catch (error) {
+            //     LOG.error(error.message);
+            // }
             res.status(200).send(tenantURL);
         }, function (err) {
             LOG.error(err.stack);
@@ -123,14 +121,6 @@ function initapi(app) {
             res.status(403).send("Forbidden");
         }
     });
-    app.post("/srv/initDB", async function (req, res) {
-        try {
-            await (0, dbUtils_1.initDB)(req.tenant || req.authInfo.getSubaccountId());
-        }
-        catch (error) {
-            res.status(500).send(error.message);
-        }
-    });
     // // destination reuse service
     app.get('/srv/destinations', async function (req, res) {
         console.log('Retrive destinations!!!');
@@ -158,4 +148,3 @@ function initapi(app) {
     });
 }
 module.exports = cds_1.default.server;
-//# sourceMappingURL=server.js.map

@@ -1,4 +1,6 @@
 # CAP 
+.vscode/settings.json
+
 _out
 *.db
 *.sqlite

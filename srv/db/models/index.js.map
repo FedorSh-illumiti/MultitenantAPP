@@ -1,1 +1,0 @@
-{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/db/models/index.ts"],"names":[],"mappings":";;;;;;AAAA,0DAAiC;AAK/B,mBALK,kBAAQ,CAKL;AAHV,OAAO,CAAC,GAAG,CAAC,OAAO,CAAC,CAAC","sourcesContent":["import Employee from \"./employee\"\n\nconsole.log('index');\n\nexport {\n  Employee\n}"]}
