@@ -1,0 +1,11 @@
+70t321#PLAIN##Could not get html5 repo token from subscriber subaccount tenant-xpqqbs72.us10-001 fetching from provider subaccount 
+Error: Error getting client_credentials token for html5-apps-repo-rt from subaccount tenant-xpqqbs72.us10-001 error: Hostname/IP does not 
+match certificate's altnames: Host: tenant-xpqqbs72.us10-001.authentication.us10.hana.ondemand.com. is not in the cert's altnames:
+ DNS:*.cf.us10.hana.ondemand.com, DNS:*.uaa.cf.us10.hana.ondemand.com, DNS:*.mesh.cf.us10.hana.ondemand.com, DNS:*.login.cf.us10.hana.ondemand.com, 
+ DNS:authentication.us10.hana.ondemand.com, DNS:*.authentication.us10.hana.ondemand.com, DNS:*.cfapps.us10.hana.ondemand.com, 
+ DNS:*.feature-flags-dashboard.cfapps.us10.hana.ondemand.com, DNS:*.subscription-management-dashboard.cfapps.us10.hana.ondemand.com,
+  DNS:*.operationsconsole.cfapps.us10.hana.ondemand.com, DNS:*.internal.cfapps.us10.hana.ondemand.com, DNS:*.auditlog-viewer.cfapps.us10.hana.ondemand.com, 
+  DNS:*.cert.cfapps.us10.hana.ondemand.com, DNS:cockpit.us10.hana.ondemand.com, DNS:authentication.cert.us10.hana.ondemand.com, DNS:*.authentication.cert.us10.hana.ondemand.com#
+#2.0#2023 06 22 06:48:51:057#-04:00#INFO#/Auth/OAuth2#####c3354133-50d9-41d9-9160-043c0e5c5c2e####s668CvJ5MgHpzb68zmfqwXdVivHZrI4s######lj70t3dz#PLAIN##query does not exist for request url /company1forecastinglaunchpad/index.html#
+#2.0#2023 06 22 06:48:51:058#-04:00#INFO#/Auth/OAuth2#####c3354133-50d9-41d9-9160-043c0e5c5c2e####s668CvJ5MgHpzb68zmfqwXdVivHZrI4s######lj70t3dz#PLAIN##sending page with client-side redirect to https://tenant-xpqqbs72.us10-001.authentication.us10.hana.ondemand.com/oauth/authorize?response_type=code&client_id=sb-forecasting!t149658&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Flogin%2Fcallback#
+#2.0#2023 06 22 06:48:51:058#-04:00#INFO#/Auth/OAuth2#####c3354133-50d9-41d9-9160-043c0e5c5c2e####s668CvJ5MgHpzb68zmfqwXdVivHZrI4s######lj70t3dz#PLAIN##x-forwarded-path header: undefined#
